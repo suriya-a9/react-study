@@ -9,20 +9,17 @@ export default function Technician() {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [form, setForm] = useState({
-        firstName: "",
-        lastName: "",
+        name: "",
         mobile: "",
         email: "",
-        gender: "",
         role: "",
-        password: "",
         image: null
     })
 
     useEffect(() => {
         const fetchTechnicians = async () => {
             try {
-                const res = await axios.post("http://localhost:8080/api/technician/list");
+                const res = await axios.get("http://localhost:8080/api/test");
                 setTechnicians(res.data.data);
             } catch (err) {
                 console.error(err)
@@ -49,13 +46,10 @@ export default function Technician() {
 
     const handleEdit = (item) => {
         setForm({
-            firstName: item.firstName,
-            lastName: item.lastName,
+            name: item.name,
             mobile: item.mobile,
             email: item.email,
-            gender: item.gender,
             role: item.role._id,
-            password: item.password,
             image: item.image,
         })
         setEditId(item._id);
@@ -66,35 +60,29 @@ export default function Technician() {
         setSubmitting(true);
         try {
             const formData = new FormData();
-            formData.append("firstName", form.firstName);
-            formData.append("lastName", form.lastName);
+            formData.append("name", form.name);
             formData.append("mobile", form.mobile);
             formData.append("email", form.email);
-            formData.append("gender", form.gender);
             formData.append("role", form.role);
-            formData.append("password", form.password);
             formData.append("image", form.image);
 
             let res;
 
             if (editId) {
-                res = await axios.post(`http://localhost:8080/api/technician/admin-update/${editId}`, formData);
+                res = await axios.post(`http://localhost:8080/api/test/update/${editId}`, formData);
                 setTechnicians(prev => (prev.map(item => item._id === editId ? res.data.data : item)));
                 setEditId(null);
                 window.location.reload();
             } else {
-                res = await axios.post(`http://localhost:8080/api/technician/register`, formData);
+                res = await axios.post(`http://localhost:8080/api/test/add`, formData);
                 setTechnicians(prev => [...prev, res.data.data]);
                 window.location.reload();
             }
             setForm({
-                firstName: "",
-                lastName: "",
+                name: '',
                 mobile: "",
                 email: "",
-                gender: "",
                 role: "",
-                password: "",
                 image: null
             });
         } catch (err) {
@@ -105,7 +93,7 @@ export default function Technician() {
     }
 
     const handleDelete = async (id) => {
-        await axios.post(`http://localhost:8080/api/technician/delete/${id}`);
+        await axios.post(`http://localhost:8080/api/test/delete/${id}`);
         setTechnicians(prev => prev.filter(item => item._id !== id))
     }
 
@@ -124,12 +112,8 @@ export default function Technician() {
             render: (_, index) => index + 1,
         },
         {
-            key: "firstName",
-            label: "First Name",
-        },
-        {
-            key: "lastName",
-            label: "Last Name",
+            key: "name",
+            label: "Name"
         },
         {
             key: "email",
@@ -138,10 +122,6 @@ export default function Technician() {
         {
             key: "mobile",
             label: "Mobile",
-        },
-        {
-            key: "gender",
-            label: "Gender",
         },
         {
             key: "role",
@@ -169,22 +149,12 @@ export default function Technician() {
                 <>
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <label>First Name</label>
+                            <label>Name</label>
                             <input
                                 type="text"
-                                name="firstName"
-                                value={form.firstName}
-                                placeholder="firstName"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <label>Last Name</label>
-                            <input
-                                type="text"
-                                name="lastName"
-                                value={form.lastName}
-                                placeholder="lastName"
+                                name="name"
+                                value={form.name}
+                                placeholder="name"
                                 onChange={handleChange}
                             />
                         </div>
@@ -209,16 +179,6 @@ export default function Technician() {
                             />
                         </div>
                         <div>
-                            <label>Gender</label>
-                            <input
-                                type="text"
-                                name="gender"
-                                value={form.gender}
-                                placeholder="gender"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
                             <label>Roles</label>
                             <select name="role" value={form.role} onChange={handleChange}>
                                 <option value="">Select Role</option>
@@ -226,16 +186,6 @@ export default function Technician() {
                                     <option key={role._id} value={role._id}>{role.skill}</option>
                                 ))}
                             </select>
-                        </div>
-                        <div>
-                            <label>Password</label>
-                            <input
-                                type="text"
-                                name="password"
-                                value={form.password}
-                                placeholder="password"
-                                onChange={handleChange}
-                            />
                         </div>
                         <div>
                             <label>Image</label>
