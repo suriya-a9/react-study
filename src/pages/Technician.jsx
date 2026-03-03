@@ -10,8 +10,7 @@ export default function Technician() {
     const [submitting, setSubmitting] = useState(false);
     const [form, setForm] = useState({
         name: "",
-        mobile: "",
-        email: "",
+        list: "",
         role: "",
         image: null
     })
@@ -19,7 +18,7 @@ export default function Technician() {
     useEffect(() => {
         const fetchTechnicians = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/api/test");
+                const res = await axios.get("http://localhost:8080/api/testing");
                 setTechnicians(res.data.data);
             } catch (err) {
                 console.error(err)
@@ -47,8 +46,7 @@ export default function Technician() {
     const handleEdit = (item) => {
         setForm({
             name: item.name,
-            mobile: item.mobile,
-            email: item.email,
+            list: item.list,
             role: item.role._id,
             image: item.image,
         })
@@ -61,27 +59,25 @@ export default function Technician() {
         try {
             const formData = new FormData();
             formData.append("name", form.name);
-            formData.append("mobile", form.mobile);
-            formData.append("email", form.email);
+            formData.append("list", form.list);
             formData.append("role", form.role);
             formData.append("image", form.image);
 
             let res;
 
             if (editId) {
-                res = await axios.post(`http://localhost:8080/api/test/update/${editId}`, formData);
+                res = await axios.post(`http://localhost:8080/api/testing/update/${editId}`, formData);
                 setTechnicians(prev => (prev.map(item => item._id === editId ? res.data.data : item)));
                 setEditId(null);
                 window.location.reload();
             } else {
-                res = await axios.post(`http://localhost:8080/api/test/add`, formData);
+                res = await axios.post(`http://localhost:8080/api/testing/add`, formData);
                 setTechnicians(prev => [...prev, res.data.data]);
                 window.location.reload();
             }
             setForm({
                 name: '',
-                mobile: "",
-                email: "",
+                list: "",
                 role: "",
                 image: null
             });
@@ -93,7 +89,7 @@ export default function Technician() {
     }
 
     const handleDelete = async (id) => {
-        await axios.post(`http://localhost:8080/api/test/delete/${id}`);
+        await axios.post(`http://localhost:8080/api/testing/delete/${id}`);
         setTechnicians(prev => prev.filter(item => item._id !== id))
     }
 
@@ -116,12 +112,8 @@ export default function Technician() {
             label: "Name"
         },
         {
-            key: "email",
-            label: "Email",
-        },
-        {
-            key: "mobile",
-            label: "Mobile",
+            key: "list",
+            label: "List",
         },
         {
             key: "role",
@@ -159,22 +151,12 @@ export default function Technician() {
                             />
                         </div>
                         <div>
-                            <label>Mobile</label>
+                            <label>List</label>
                             <input
                                 type="text"
-                                name="mobile"
-                                value={form.mobile}
-                                placeholder="mobile"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                name="email"
-                                value={form.email}
-                                placeholder="email"
+                                name="list"
+                                value={form.list}
+                                placeholder="list"
                                 onChange={handleChange}
                             />
                         </div>
