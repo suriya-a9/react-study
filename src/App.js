@@ -4,6 +4,8 @@ import Technician from "./pages/Technician";
 import Counter from "./pages/Counter";
 import Todo from "./pages/Todo";
 import Redux from "./pages/Redux";
+import TodoRedux from "./pages/TodoRedux";
+import TodoLocalStorage from "./pages/TodoLocalStorage";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
       <Route path="/counter" element={<Counter />} />
       <Route path="/to-do" element={<Todo />} />
       <Route path="/redux" element={<Redux />} />
+      <Route path="/to-do-redux" element={<TodoRedux />} />
+      <Route path="/to-do-local" element={<TodoLocalStorage />} />
     </Routes>
   );
 }
