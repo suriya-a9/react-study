@@ -6,6 +6,7 @@ import Todo from "./pages/Todo";
 import Redux from "./pages/Redux";
 import TodoRedux from "./pages/TodoRedux";
 import TodoLocalStorage from "./pages/TodoLocalStorage";
+import State from "./pages/State";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/redux" element={<Redux />} />
       <Route path="/to-do-redux" element={<TodoRedux />} />
       <Route path="/to-do-local" element={<TodoLocalStorage />} />
+      <Route path="/state" element={<State />} />
     </Routes>
   );
 }
