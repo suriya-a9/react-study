@@ -285,22 +285,26 @@
 
 // const State = () => {
 //     const [theme, setTheme] = useState('light');
+
 //     const themeChange = () => {
 //         setTheme(theme === 'light' ? 'dark' : 'light');
 //     }
+
 //     const styles = {
 //         backgroundColor: theme === 'light' ? 'white' : 'black',
 //         color: theme === 'light' ? 'black' : 'white',
-//         textAlign: 'center',
 //         height: '100vh',
+//         textAlign: 'center',
+//         padding: '20px',
 //         display: 'flex',
 //         justifyContent: 'start',
 //         alignItems: 'center',
 //         flexDirection: 'column'
 //     }
+
 //     return (
 //         <div style={styles}>
-//             <span>Current theme: {theme}</span>
+//             <h2>Current Theme: {theme === 'light' ? 'Light' : 'Dark'} theme</h2>
 //             <button onClick={themeChange}>Switch to {theme === 'light' ? 'Dark' : 'Light'} mode</button>
 //         </div>
 //     )
@@ -310,76 +314,137 @@
 
 // State in Todo Listing - [Highlight]
 
+// import { useState } from "react";
+
+// export default function Todo() {
+//     const [tasks, setTasks] = useState([]);
+//     const [newTask, setNewTask] = useState('');
+//     const [editIndex, setEditIndex] = useState(null);
+//     const [editText, setEditText] = useState('');
+
+//     const addTask = () => {
+//         if (newTask) {
+//             setTasks([...tasks, newTask]);
+//             setNewTask('');
+//         }
+//     }
+
+//     const handleEdit = (index) => {
+//         setEditIndex(index);
+//         setEditText(tasks[index])
+//     }
+
+//     const handleUpdate = () => {
+//         const updatedTask = [...tasks]
+//         updatedTask[editIndex] = editText
+//         setTasks(updatedTask);
+//         setEditIndex(null)
+//         setEditText('')
+//     }
+
+//     const handleDelete = (index) => {
+//         const updatedTask = tasks.filter((_, i) => i !== index)
+//         setTasks(updatedTask);
+//     }
+
+//     return (
+//         <div>
+//             <h1>Todo List</h1>
+//             <div>
+//                 <lable>Add Task: </lable>
+//                 <input
+//                     type="text"
+//                     value={newTask}
+//                     placeholder="Add new task"
+//                     onChange={(e) => setNewTask(e.target.value)}
+//                 />
+//                 <button onClick={addTask}>Submit</button>
+//             </div>
+//             <ul>
+//                 {tasks.map((task, index) => (
+//                     <li key={index} className="task-item">
+//                         {editIndex === index ? (
+//                             <span>
+//                                 <input
+//                                     type="text"
+//                                     value={editText}
+//                                     onChange={(e) => setEditText(e.target.value)}
+//                                 />
+//                                 <button onClick={handleUpdate}>Save</button>
+//                             </span>
+//                         ) : (
+//                             <span>
+//                                 <span>{task}</span>
+//                                 <div className="buttons">
+//                                     <button className="btn-edit" onClick={() => handleEdit(index)}>Edit</button>
+//                                     <button className="btn-delete" onClick={() => handleDelete(index)}>Delete</button>
+//                                 </div>
+//                             </span>
+//                         )}
+//                     </li>
+//                 ))}
+//             </ul>
+//         </div>
+//     )
+// }
+
+// State in Derived State & Computations - [Highlight]
+
 import { useState } from "react";
 
-export default function Todo() {
-    const [tasks, setTasks] = useState([]);
-    const [newTask, setNewTask] = useState('');
-    const [editIndex, setEditIndex] = useState(null);
-    const [editText, setEditText] = useState('');
+const Cart = () => {
+    const [cart, setCart] = useState([
+        { id: 1, name: "Apple", price: 10, quantity: 1 },
+        { id: 2, name: "Banana", price: 5, quantity: 2 }
+    ]);
 
-    const addTask = () => {
-        if (newTask) {
-            setTasks([...tasks, newTask]);
-            setNewTask('');
-        }
-    }
+    const increaseQty = (id) => {
+        setCart(
+            cart.map((item) =>
+                item.id === id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            )
+        );
+    };
 
-    const handleEdit = (index) => {
-        setEditIndex(index);
-        setEditText(tasks[index])
-    }
+    const decreaseQty = (id) => {
+        setCart(
+            cart.map((item) =>
+                item.id === id && item.quantity > 1
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            )
+        );
+    };
 
-    const handleUpdate = () => {
-        const updatedTask = [...tasks]
-        updatedTask[editIndex] = editText
-        setTasks(updatedTask);
-        setEditIndex(null)
-        setEditText('')
-    }
+    // Derived state
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    const handleDelete = (index) => {
-        const updatedTask = tasks.filter((_, i) => i !== index)
-        setTasks(updatedTask);
-    }
+    const totalPrice = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
 
     return (
         <div>
-            <h1>Todo List</h1>
-            <div>
-                <lable>Add Task: </lable>
-                <input
-                    type="text"
-                    value={newTask}
-                    placeholder="Add new task"
-                    onChange={(e) => setNewTask(e.target.value)}
-                />
-                <button onClick={addTask}>Submit</button>
-            </div>
-            <ul>
-                {tasks.map((task, index) => (
-                    <li key={index} className="task-item">
-                        {editIndex === index ? (
-                            <span>
-                                <input
-                                    type="text"
-                                    value={editText}
-                                    onChange={(e) => setEditText(e.target.value)}
-                                />
-                                <button onClick={handleUpdate}>Save</button>
-                            </span>
-                        ) : (
-                            <span>
-                                <span>{task}</span>
-                                <div className="buttons">
-                                    <button className="btn-edit" onClick={() => handleEdit(index)}>Edit</button>
-                                    <button className="btn-delete" onClick={() => handleDelete(index)}>Delete</button>
-                                </div>
-                            </span>
-                        )}
-                    </li>
-                ))}
-            </ul>
+            <h2>Shopping Cart</h2>
+
+            {cart.map((item) => (
+                <div key={item.id}>
+                    <span>{item.name}</span> - ₹{item.price}
+                    <button onClick={() => decreaseQty(item.id)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => increaseQty(item.id)}>+</button>
+                </div>
+            ))}
+
+            <hr />
+
+            <h3>Total Items: {totalItems}</h3>
+            <h3>Total Price: ₹{totalPrice}</h3>
         </div>
-    )
-}
+    );
+};
+
+export default Cart;
