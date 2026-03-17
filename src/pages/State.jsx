@@ -159,6 +159,121 @@
 
 // export default State;
 
+// State Listing with Edit and Delete - [Highlight]
+
+// import { useState } from "react";
+
+// const State = () => {
+//     const [list, setList] = useState([]);
+//     const [editIndex, setEditIndex] = useState(null);
+
+//     const [form, setForm] = useState({
+//         name: "",
+//         email: "",
+//         password: ""
+//     });
+
+//     const handleChange = (e) => {
+//         setForm({
+//             ...form,
+//             [e.target.name]: e.target.value
+//         });
+//     };
+
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+
+//         if (editIndex !== null) {
+//             const updatedList = list.map((item, index) =>
+//                 index === editIndex ? { ...item, ...form } : item
+//             );
+
+//             setList(updatedList);
+//             setEditIndex(null);
+//         } else {
+//             setList([...list, form]);
+//         }
+
+//         setForm({
+//             name: "",
+//             email: "",
+//             password: ""
+//         });
+//     };
+
+//     const handleDelete = (indexToDelete) => {
+//         const filtered = list.filter((_, index) => index !== indexToDelete);
+//         setList(filtered);
+//     };
+
+//     const handleEdit = (item, index) => {
+//         setForm({
+//             name: item.name,
+//             email: item.email,
+//             password: item.password
+//         });
+
+//         setEditIndex(index);
+//     };
+
+//     return (
+//         <>
+//             <span>Form</span>
+
+//             <form onSubmit={handleSubmit}>
+//                 <div>
+//                     <label>Name: </label>
+//                     <input
+//                         type="text"
+//                         name="name"
+//                         value={form.name}
+//                         onChange={handleChange}
+//                     />
+//                 </div>
+
+//                 <div>
+//                     <label>Email: </label>
+//                     <input
+//                         type="text"
+//                         name="email"
+//                         value={form.email}
+//                         onChange={handleChange}
+//                     />
+//                 </div>
+
+//                 <div>
+//                     <label>Password: </label>
+//                     <input
+//                         type="text"
+//                         name="password"
+//                         value={form.password}
+//                         onChange={handleChange}
+//                     />
+//                 </div>
+
+//                 <button type="submit">
+//                     {editIndex !== null ? "Update" : "Submit"}
+//                 </button>
+//             </form>
+
+//             <hr />
+
+//             {list.map((item, index) => (
+//                 <div key={index}>
+//                     <p>{item.name}</p>
+//                     <p>{item.email}</p>
+//                     <p>{item.password}</p>
+
+//                     <button onClick={() => handleEdit(item, index)}>Edit</button>
+//                     <button onClick={() => handleDelete(index)}>Delete</button>
+//                 </div>
+//             ))}
+//         </>
+//     );
+// };
+
+// export default State;
+
 // State Listing with Edit and Delete with Unique Id instead of Index - [Highlight]
 
 // import { useState } from "react";
@@ -390,61 +505,61 @@
 
 // State in Derived State & Computations - [Highlight]
 
-import { useState } from "react";
+// import { useState } from "react";
 
-const Cart = () => {
-    const [cart, setCart] = useState([
-        { id: 1, name: "Apple", price: 10, quantity: 1 },
-        { id: 2, name: "Banana", price: 5, quantity: 2 }
-    ]);
+// const Cart = () => {
+//     const [cart, setCart] = useState([
+//         { id: 1, name: "Apple", price: 10, quantity: 1 },
+//         { id: 2, name: "Banana", price: 5, quantity: 2 }
+//     ]);
 
-    const increaseQty = (id) => {
-        setCart(
-            cart.map((item) =>
-                item.id === id
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            )
-        );
-    };
+//     const increaseQty = (id) => {
+//         setCart(
+//             cart.map((item) =>
+//                 item.id === id
+//                     ? { ...item, quantity: item.quantity + 1 }
+//                     : item
+//             )
+//         );
+//     };
 
-    const decreaseQty = (id) => {
-        setCart(
-            cart.map((item) =>
-                item.id === id && item.quantity > 1
-                    ? { ...item, quantity: item.quantity - 1 }
-                    : item
-            )
-        );
-    };
+//     const decreaseQty = (id) => {
+//         setCart(
+//             cart.map((item) =>
+//                 item.id === id && item.quantity > 1
+//                     ? { ...item, quantity: item.quantity - 1 }
+//                     : item
+//             )
+//         );
+//     };
 
-    // Derived state
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+//     // Derived state
+//     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    const totalPrice = cart.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-    );
+//     const totalPrice = cart.reduce(
+//         (sum, item) => sum + item.price * item.quantity,
+//         0
+//     );
 
-    return (
-        <div>
-            <h2>Shopping Cart</h2>
+//     return (
+//         <div>
+//             <h2>Shopping Cart</h2>
 
-            {cart.map((item) => (
-                <div key={item.id}>
-                    <span>{item.name}</span> - ₹{item.price}
-                    <button onClick={() => decreaseQty(item.id)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => increaseQty(item.id)}>+</button>
-                </div>
-            ))}
+//             {cart.map((item) => (
+//                 <div key={item.id}>
+//                     <span>{item.name}</span> - ₹{item.price}
+//                     <button onClick={() => decreaseQty(item.id)}>-</button>
+//                     <span>{item.quantity}</span>
+//                     <button onClick={() => increaseQty(item.id)}>+</button>
+//                 </div>
+//             ))}
 
-            <hr />
+//             <hr />
 
-            <h3>Total Items: {totalItems}</h3>
-            <h3>Total Price: ₹{totalPrice}</h3>
-        </div>
-    );
-};
+//             <h3>Total Items: {totalItems}</h3>
+//             <h3>Total Price: ₹{totalPrice}</h3>
+//         </div>
+//     );
+// };
 
-export default Cart;
+// export default Cart;
