@@ -563,3 +563,64 @@
 // };
 
 // export default Cart;
+
+// State with State Lifting & Prop Drilling 
+
+import { useState } from "react";
+
+const Cart = () => {
+    const [cart, setCart] = useState([
+        { id: 1, name: "Apple", price: 10, quantity: 1 },
+        { id: 2, name: "Banana", price: 5, quantity: 2 }
+    ]);
+
+    const increaseQty = (id) => {
+        setCart(
+            cart.map((item) =>
+                item.id === id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            )
+        );
+    };
+
+    const decreaseQty = (id) => {
+        setCart(
+            cart.map((item) =>
+                item.id === id && item.quantity > 1
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            )
+        );
+    };
+
+    // Derived state
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    const totalPrice = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
+
+    return (
+        <div>
+            <h2>Shopping Cart</h2>
+
+            {cart.map((item) => (
+                <div key={item.id}>
+                    <span>{item.name}</span> - ₹{item.price}
+                    <button onClick={() => decreaseQty(item.id)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => increaseQty(item.id)}>+</button>
+                </div>
+            ))}
+
+            <hr />
+
+            <h3>Total Items: {totalItems}</h3>
+            <h3>Total Price: ₹{totalPrice}</h3>
+        </div>
+    );
+};
+
+export default Cart;
