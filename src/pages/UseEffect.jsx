@@ -203,59 +203,46 @@
 // import axios from "axios";
 
 // function TodoSearch() {
-//   const [query, setQuery] = useState("");
-//   const [debouncedQuery, setDebouncedQuery] = useState("");
-//   const [results, setResults] = useState([]);
+//     const [query, setQuery] = useState("");
+//     const [results, setResults] = useState([]);
 
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setDebouncedQuery(query);
-//     }, 500);
+//     useEffect(() => {
+//         const timer = setTimeout(async () => {
+//             if (!query) {
+//                 setResults([]);
+//                 return;
+//             }
 
-//     return () => clearTimeout(timer);
-//   }, [query]);
+//             try {
+//                 const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+//                 const filtered = res.data.filter(todo =>
+//                     todo.title.toLowerCase().includes(query.toLowerCase())
+//                 );
+//                 setResults(filtered);
+//             } catch (err) {
+//                 console.error(err);
+//             }
+//         }, 500);
 
-//   useEffect(() => {
-//     if (!debouncedQuery) {
-//       setResults([]);
-//       return;
-//     }
+//         return () => clearTimeout(timer);
+//     }, [query]);
 
-//     const fetchTodos = async () => {
-//       try {
-//         const res = await axios.get(
-//           "https://jsonplaceholder.typicode.com/todos"
-//         );
+//     return (
+//         <div>
+//             <input
+//                 type="text"
+//                 placeholder="Search todos..."
+//                 value={query}
+//                 onChange={(e) => setQuery(e.target.value)}
+//             />
 
-//         const filtered = res.data.filter(todo =>
-//           todo.title.toLowerCase().includes(debouncedQuery.toLowerCase())
-//         );
-
-//         setResults(filtered);
-//       } catch (err) {
-//         console.error(err);
-//       }
-//     };
-
-//     fetchTodos();
-//   }, [debouncedQuery]);
-
-//   return (
-//     <div>
-//       <input
-//         type="text"
-//         placeholder="Search todos..."
-//         value={query}
-//         onChange={(e) => setQuery(e.target.value)}
-//       />
-
-//       <ul>
-//         {results.map(todo => (
-//           <li key={todo.id}>{todo.title}</li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
+//             <ul>
+//                 {results.map(todo => (
+//                     <li key={todo.id}>{todo.title}</li>
+//                 ))}
+//             </ul>
+//         </div>
+//     );
 // }
 
 // export default TodoSearch;
