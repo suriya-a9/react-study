@@ -8,15 +8,18 @@ import { Provider } from 'react-redux';
 import store from './store';
 import ThemeProvider from "./context/ThemeProvider";
 import CounterProvider from './context/CounterProvider';
+import LanguageProvider from './context/LanguageProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <ThemeProvider>
       <CounterProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <LanguageProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </LanguageProvider>
       </CounterProvider>
     </ThemeProvider>
   </Provider>
