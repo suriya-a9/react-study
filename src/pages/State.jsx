@@ -567,6 +567,7 @@
 // State with State Lifting & Prop Drilling 
 
 import { useState } from "react";
+import Navbar from "../component/Navbar";
 
 const Cart = () => {
     const [cart, setCart] = useState([
@@ -594,7 +595,6 @@ const Cart = () => {
         );
     };
 
-    // Derived state
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     const totalPrice = cart.reduce(
@@ -604,6 +604,7 @@ const Cart = () => {
 
     return (
         <div>
+            <Navbar />
             <h2>Shopping Cart</h2>
 
             {cart.map((item) => (

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Navbar from "../component/Navbar";
 import axios from "axios";
 
 export default function Home() {
@@ -64,6 +65,7 @@ export default function Home() {
 
     return (
         <div>
+            <Navbar />
             <h2>Admin users List</h2>
             {loading ? (
                 <div>Loading...</div>

@@ -6,13 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
+import ThemeProvider from "./context/ThemeProvider";
+import CounterProvider from './context/CounterProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider>
+      <CounterProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </CounterProvider>
+    </ThemeProvider>
   </Provider>
 );
 
