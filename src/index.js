@@ -9,6 +9,7 @@ import store from './store';
 import ThemeProvider from "./context/ThemeProvider";
 import CounterProvider from './context/CounterProvider';
 import LanguageProvider from './context/LanguageProvider';
+import LogProvider from './context/LogProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,9 +17,11 @@ root.render(
     <ThemeProvider>
       <CounterProvider>
         <LanguageProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <LogProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </LogProvider>
         </LanguageProvider>
       </CounterProvider>
     </ThemeProvider>
