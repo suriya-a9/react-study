@@ -10,6 +10,7 @@ import ThemeProvider from "./context/ThemeProvider";
 import CounterProvider from './context/CounterProvider';
 import LanguageProvider from './context/LanguageProvider';
 import LogProvider from './context/LogProvider';
+import CartProvider from './context/CartProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,9 +19,11 @@ root.render(
       <CounterProvider>
         <LanguageProvider>
           <LogProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
+            <CartProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </CartProvider>
           </LogProvider>
         </LanguageProvider>
       </CounterProvider>

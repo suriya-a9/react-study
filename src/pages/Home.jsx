@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../component/Navbar";
+import { CartContext } from "../context/CartContext";
 import axios from "axios";
 
 export default function Home() {
+    const { addToCart } = useContext(CartContext);
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,6 +15,12 @@ export default function Home() {
         password: "",
         roleId: ""
     })
+
+    const products = [
+        { id: 1, name: "Apple", price: 10 },
+        { id: 2, name: "Banana", price: 5 },
+        { id: 3, name: "Orange", price: 8 }
+    ];
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -66,6 +74,16 @@ export default function Home() {
     return (
         <div>
             <Navbar />
+            <h2>Products</h2>
+
+            {products.map(item => (
+                <div key={item.id}>
+                    <p>{item.name} - ₹{item.price}</p>
+                    <button onClick={() => addToCart(item)}>
+                        Add to Cart
+                    </button>
+                </div>
+            ))}
             <h2>Admin users List</h2>
             {loading ? (
                 <div>Loading...</div>

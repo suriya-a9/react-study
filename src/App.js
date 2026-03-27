@@ -8,6 +8,7 @@ import TodoRedux from "./pages/TodoRedux";
 import TodoLocalStorage from "./pages/TodoLocalStorage";
 import State from "./pages/State";
 import MountExample from "./pages/UseEffect";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/to-do-local" element={<TodoLocalStorage />} />
       <Route path="/state" element={<State />} />
       <Route path="/use-effect" element={<MountExample />} />
+      <Route path="/cart" element={<Cart />} />
     </Routes>
   );
 }
