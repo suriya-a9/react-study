@@ -8,7 +8,7 @@ const countReducer = createSlice({
             state.count += 1
         },
         decrement: (state) => {
-            state.count -= 1
+            state.count = Math.max(0, state.count -= 1);
         },
     }
 })

@@ -8,7 +8,7 @@ export default function Counter() {
     }
 
     const hanldeDecrement = () => {
-        setCount(count - 1);
+        setCount(Math.max(0, count - 1));
     }
 
     const resetCount = () => {

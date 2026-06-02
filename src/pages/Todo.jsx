@@ -7,7 +7,7 @@ export default function Todo() {
     const [editText, setEditText] = useState('');
 
     const addTask = () => {
-        if (newTask) {
+        if (newTask.trim()) {
             setTasks([...tasks, newTask]);
             setNewTask('');
         }
