@@ -247,6 +247,64 @@
 
 // export default TodoSearch;
 
+// UseEffect to Debounced to choose status and list based on the status, related from above example
+
+// import { useState, useEffect } from "react";
+// import axios from "axios";
+
+// const Debouce = () => {
+//     const [status, setStatus] = useState("");
+//     const [result, setResults] = useState([]);
+
+//     useEffect(() => {
+//         const timer = setTimeout(async () => {
+//             if (status === "") {
+//                 setResults([]);
+//                 return;
+//             }
+
+//             try {
+//                 const response = await axios.get(
+//                     "https://jsonplaceholder.typicode.com/todos"
+//                 );
+
+//                 const data = response.data.filter(
+//                     todo => todo.completed === (status === "true")
+//                 );
+
+//                 setResults(data);
+//             } catch (error) {
+//                 console.error(error);
+//             }
+//         }, 100);
+
+//         return () => clearTimeout(timer);
+//     }, [status]);
+
+//     return (
+//         <div>
+//             <select
+//                 value={status}
+//                 onChange={(e) => setStatus(e.target.value)}
+//             >
+//                 <option value="">Select Status</option>
+//                 <option value="true">Completed</option>
+//                 <option value="false">Pending</option>
+//             </select>
+
+//             <ul>
+//                 {result.map((todo) => (
+//                     <li key={todo.id}>
+//                         {todo.title} - {todo.completed ? "Completed" : "Pending"}
+//                     </li>
+//                 ))}
+//             </ul>
+//         </div>
+//     );
+// };
+
+// export default Debouce;
+
 // UseEffect to Dependent Effects - Create 2 states userId and userData - When userId changes → fetch user data - Achieve Chain effects properly
 
 // import { useState, useEffect } from "react";
@@ -296,6 +354,12 @@
 //     useEffect(() => {
 //         setCount(count + 1);
 //     }); // Issue is here cause dependency array is not mentioned. Add [] to stop it run once or add [count] with condition if(count<5) to run for 5 time
+
+// useEffect(() => {
+//     if (count < 5) {
+//         setCount(c => c + 1);
+//     }
+// }, [count]);
 
 //     return <h1>{count}</h1>;
 // }
